@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temple Date Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            flex-direction: column;
+        }
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            height: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .dialogue-box {
+            width: 80%;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 15px;
+            color: white;
+            display: none;
+            position: relative;
+            text-align: center;
+        }
+        .girl-dialogue {
+            background: rgba(255, 105, 180, 0.8);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .boy-dialogue {
+            background: rgba(30, 144, 255, 0.8);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .character {
+            width: 30%;
+            height: auto;
+            max-width: 120px;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        @media (max-width: 600px) {
+            .dialogue-box {
+                font-size: 14px;
+            }
+            .character {
+                width: 40%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bg-music" loop>
+        <source src="background.mp3" type="audio/mpeg">
+    </audio>
+    <button onclick="playMusic()" style="margin-bottom: 20px; padding: 10px; background: pink; border: none; border-radius: 5px;">Play Music</button>
+    <div class="container">
+        <img src="girl.webp" class="character" alt="Girl">
+        <div class="dialogue-box girl-dialogue" id="girl-dialogue"></div>
+        <img src="boy.webp" class="character" alt="Boy">
+        <div class="dialogue-box boy-dialogue" id="boy-dialogue"></div>
+    </div>
+    <script>
+        let girlDialogue = document.getElementById("girl-dialogue");
+        let boyDialogue = document.getElementById("boy-dialogue");
+        let music = document.getElementById("bg-music");
+
+        const conversation = [
+            { text: "Gudiki Podhama", speaker: "girl" },
+            { text: "hyy! chala chala bagunnav", speaker: "boy" },
+            { text: "awwww.......", speaker: "girl" },
+            { text: "movie ok aa neeku....", speaker: "boy" },
+            { text: "Emooooooooooooooooooooo", speaker: "girl" },
+            { text: "Unde tym ni proper gaa vaadu waste chykuuu....", speaker: "boy" },
+            { text: "Meer ela ante ala MASTARUU.....", speaker: "girl" },
+            { text: "Sare pada ilage matladukuntunte ila ne aipothadi start avdhamm....!", speaker: "boy" },
+            { text: "Sare..:)", speaker: "girl" },
+            { text: "Lv You....:)", speaker: "boy" },
+            { text: "Lv u more...:)", speaker: "girl" },
+            { text: "pada pada.....", speaker: "boy" }
+        ];
+
+        let index = 0;
+        function updateDialogue() {
+            if (index < conversation.length) {
+                if (conversation[index].speaker === "girl") {
+                    girlDialogue.innerText = conversation[index].text;
+                    girlDialogue.style.display = "block";
+                    boyDialogue.style.display = "none";
+                } else {
+                    boyDialogue.innerText = conversation[index].text;
+                    boyDialogue.style.display = "block";
+                    girlDialogue.style.display = "none";
+                }
+                index++;
+            } else {
+                clearInterval(conversationInterval);
+            }
+        }
+
+        let conversationInterval = setInterval(updateDialogue, 4000);
+        
+        function playMusic() {
+            music.play();
+        }
+    </script>
+</body>
+</html>
